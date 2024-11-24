@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  mlflow-backend:
+    image: postgres:13
+    environment:
+      - POSTGRES_USER=mlflow
+      - POSTGRES_PASSWORD=mlflow
+      - POSTGRES_DB=mlflow
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "mlflow"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build:
+      context: .
+      args:
+        - MLFLOW_TRACKING_URI=postgresql://mlflow:mlflow@mlflow-backend:5432/mlflow
+    ports:
+      - "9510:9510"  # FastAPI application
+      - "9610:9610"  # MLflow UI
+    environment:
+      - MLFLOW_TRACKING_URI=postgresql://mlflow:mlflow@mlflow-backend:5432/mlflow
+      - MLFLOW_ARTIFACTS_DESTINATION=/mlflow/artifacts
+    volumes:
+      - mlflow_artifacts:/mlflow/artifacts
+    depends_on:
+      mlflow-backend:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
+  mlflow_artifacts:

@@ -1,0 +1,9 @@
+uvicorn
+fastapi
+pydantic
+mlflow
+scikit-learn
+pandas
+numpy
+python-dotenv
+psycopg2-binary

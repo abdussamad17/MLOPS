@@ -1,0 +1,10 @@
+*/models
+__pycache__
+mlartifacts
+mlruns
+housing.csv
+grid_search_results.csv
+feature_importance.csv
+/.venv
+postgres_data/
+mlflow_artifacts/
