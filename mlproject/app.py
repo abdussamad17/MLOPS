@@ -5,4 +5,4 @@ if __name__ == "__main__":
     import logging
     logging.basicConfig(level=logging.INFO)
     logging.getLogger("uvicorn").setLevel(logging.INFO)
-    uvicorn.run(app, host="docker-compose down -v", port=9510)
+    uvicorn.run(app, host="0.0.0.0", port=9510)
