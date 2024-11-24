@@ -21,12 +21,12 @@ services:
     build:
       context: .
       args:
-        - MLFLOW_TRACKING_URI=postgresql://mlflow:mlflow@localhost:5432/mlflow
+        - MLFLOW_TRACKING_URI=postgresql://mlflow:mlflow@mlflow-backend:5432/mlflow
     ports:
       - "9510:9510"  # FastAPI application
       - "9610:9610"  # MLflow UI
     environment:
-      - MLFLOW_TRACKING_URI=postgresql://mlflow:mlflow@localhost:5432/mlflow
+      - MLFLOW_TRACKING_URI=postgresql://mlflow:mlflow@mlflow-backend:5432/mlflow
       - MLFLOW_ARTIFACTS_DESTINATION=/mlflow/artifacts
     volumes:
       - mlflow_artifacts:/mlflow/artifacts
